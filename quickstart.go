@@ -3,20 +3,20 @@
 package main
 
 import (
-  "encoding/json"
-  "fmt"
-  "log"
-  "io/ioutil"
-  "net/http"
-  "net/url"
-  "os"
-  "os/user"
-  "path/filepath"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"net/url"
+	"os"
+	"os/user"
+	"path/filepath"
 
-  "golang.org/x/net/context"
-  "golang.org/x/oauth2"
-  "golang.org/x/oauth2/google"
-  "google.golang.org/api/youtube/v3"
+	"golang.org/x/net/context"
+	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
+	"google.golang.org/api/youtube/v3"
 )
 
 const missingClientSecretsMessage = `
@@ -104,7 +104,7 @@ func handleError(err error, message string) {
   }
 }
 
-func channelsListByUsername(service *youtube.Service, part string, forUsername string) {
+func channelsListByUsername(service *youtube.Service, part []string, forUsername string) {
   call := service.Channels.List(part)
   call = call.ForUsername(forUsername)
   response, err := call.Do()
@@ -136,5 +136,5 @@ func main() {
 
   handleError(err, "Error creating YouTube client")
 
-  channelsListByUsername(service, "snippet,contentDetails,statistics", "GoogleDevelopers")
+  channelsListByUsername(service, []string{"snippet,contentDetails,statistics"}, "GoogleDevelopers")
 }
